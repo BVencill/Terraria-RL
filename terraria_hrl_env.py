@@ -158,6 +158,12 @@ class TerrariaHRLEnv(gym.Env):
             # TODO: += damage dealt to tracked boss this tick, -= damage taken this tick
         elif self.reward_mode == "explore":
             reward += self._explore_bonus(raw)
+        elif self.reward_mode == "smoke":
+            # Deliberately NOT a useful behavior - this exists only to prove
+            # MultiInputPolicy + the Dict/MultiDiscrete pipeline can transmit a
+            # learning signal at all, using the exact same dense reward as the
+            # original train_walk.py test for a like-for-like comparison.
+            reward += raw["VelocityX"]
         # "raw" mode: milestone bonus only, for debugging the pipeline itself
 
         if raw["Health"] <= 0:
